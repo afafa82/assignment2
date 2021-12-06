@@ -87,6 +87,12 @@
                 <li>
                     <a th:href="@{/logout}"><i class="icon_key_alt"></i> Log Out</a>
                 </li>
+                <li>
+                    <a th:href="@{/shopList}"><i class="icon_cart"></i>Shop List</a>
+                </li>
+                <li>
+                    <a th:href="@{/favouriteRecipe}"><i class="icon_bag"></i>Favourite Recipes</a>
+                </li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -158,6 +164,7 @@
                     <th>prepTime</th>
                     <th>cookTime</th>
                     <th>servings</th>
+                    <th>Favourite</th>
 
                 </tr>
                 </thead>
@@ -168,12 +175,7 @@
                     <td th:text="${recipe.prepTime}">Otto</td>
                     <td th:text="${recipe.cookTime}">@mdo</td>
                     <td th:text="${recipe.servings}">@mdo</td>
-                    <td>
-
-                        </div>
-
-                    </td>
-
+                    <td><input type="button" th:data-name="${recipe.description}" th:data-id="${recipe.id}" th:data-username="${user.username}" class="cart_btn" value="Favourite"></td>
                 </tr>
 
                 </tbody>
@@ -183,13 +185,6 @@
             <!-- page end-->
         </section>
     </section>
-    <!--main content end-->
-    <div class="text-right">
-        <div class="credits">
-
-            Designed by The Hackers
-        </div>
-    </div>
 </section>
 
 
@@ -276,7 +271,34 @@
 <script src="js/recipe.js"></script>
 <script src="js/search.js"></script>
 
+<script>
+    $(".cart_btn").click(function(e){
+        var pop_prompt = prompt("Do you want to add to your Favourit Recipe Lists of " + e.currentTarget.dataset.id +"? yes or no");
+        if(pop_prompt == "yes") {
+            $.ajax({
+                url:'./addFavouriteRecipe',
+                type:'post',
+                data:{
+                    "recipe" : e.currentTarget.dataset.id,
+                    "r_description" : e.currentTarget.dataset.description,
+                    "userid" : e.currentTarget.dataset.username,
+                    "r_prepTime" : e.currentTarget.dataset.r_prepTime,
+                    "r_cookTime" : e.currentTarget.dataset.r_cookTime,
+                    "r_servings" : e.currentTarget.dataset.r_servings;
 
+                },
+                success:function(data){
+                    if(data=="OK") {
+                        alert("Successes");
+                    }else{
+                        alert("Failed");
+                    }
+                }
+            })
+        }
+
+    });
+</script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </body>

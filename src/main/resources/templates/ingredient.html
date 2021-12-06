@@ -71,6 +71,12 @@
                 <li>
                     <a th:href="@{/logout}"><i class="icon_key_alt"></i> Log Out</a>
                 </li>
+                <li>
+                    <a th:href="@{/shopList}"><i class="icon_cart"></i>Shop List</a>
+                </li>
+                <li>
+                    <a th:href="@{/favouriteRecipe}"><i class="icon_bag"></i>Favourite Recipes</a>
+                </li>
             </ul>
         </li>
         <!-- user login dropdown end -->
@@ -142,6 +148,7 @@
                     <th>description</th>
                     <th>amount</th>
                     <th>RecipeDescription</th>
+                    <th>cart</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -150,12 +157,8 @@
                     <td th:text="${ingredient.description}">Mark</td>
                     <td th:text="${ingredient.amount}">Otto</td>
                     <td th:text="${ingredient.recipe.description}">@mdo</td>
-                    <td>
-
-                        </div>
-
-                    </td>
-
+<!--                    <td><button th:onclick="'cart_submit(\'' + ${ingredient.id} + '\',\'afafa82\');'">cart</button></td>-->
+                    <td><input type="button" th:data-name="${ingredient.description}" th:data-id="${ingredient.id}" th:data-username="${user.username}" th:data-price="${ingredient.amount}" class="cart_btn" value="cart"></td>
                 </tr>
 
                 </tbody>
@@ -164,13 +167,6 @@
             <!-- page end-->
         </section>
     </section>
-    <!--main content end-->
-    <div class="text-right">
-        <div class="credits">
-
-            Designed by The Hackers
-        </div>
-    </div>
 </section>
 
 
@@ -248,6 +244,35 @@
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+<script>
+$(".cart_btn").click(function(e){
+    var pop_prompt = prompt(e.currentTarget.dataset.id+"Do you want to put selected item?");
+    if(pop_prompt > 0) {
+        $.ajax({
+            url:'./addShopcart',
+            type:'post',
+            data:{
+                "ingredient" : e.currentTarget.dataset.id,
+                "it_qty" : pop_prompt,
+                "userid" : e.currentTarget.dataset.username,
+                "it_price" : e.currentTarget.dataset.price,
+                "it_name" : e.currentTarget.dataset.name
+            },
+            success:function(data){
+                if(data=="OK") {
+                    alert("Succesed");
+                }else{
+                    alert("Failed");
+                }
+            }
+        })
+    }else{
+        alert("Write down amounts");
+        return false;
+    }
+
+});
+</script>
 </body>
 
 </html>

@@ -9,7 +9,7 @@
     <meta name="keyword" content="Creative, Dashboard, Admin, Template, Theme, Bootstrap, Responsive, Retina, Minimal">
     <link rel="shortcut icon" href="img/favicon.png">
 
-    <title>Login Page </title>
+    <title>Login</title>
     <!-- Bootstrap CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- bootstrap theme -->
@@ -31,7 +31,7 @@
 
 </head>
 
-<body class="login-img3-body">
+<body>
 
 
 
@@ -42,7 +42,6 @@
         <p th:text="${session.message.content}">
         </p>
         <th:block th:text="${#session.removeAttribute('message')}">
-
         </th:block>
     </div>
 
@@ -51,29 +50,17 @@
 
 
 
-            <p class="login-img"><i class="icon_lock_alt"></i></p>
-            <div class="input-group">
-                <span class="input-group-addon"><i class="icon_profile"></i></span>
-                <input type="text" class="form-control" placeholder="Username" name="username" autofocus>
+            <div class="form-group">
+                <label for="email" style="color: black">Username:</label> <input type="text" class="form-control" placeholder="Username" name="username" autofocus id="email">
             </div>
-            <div class="input-group">
-                <span class="input-group-addon"><i class="icon_key_alt"></i></span>
-                <input type="password" class="form-control" placeholder="Password" name="password">
+            <div class="form-group">
+                <label for="password" style="color: black">Password:</label> <input type="password" class="form-control" placeholder="Password" name="password" id="password">
             </div>
-            <label class="checkbox">
-                <input type="checkbox" value="remember-me"> Remember me
-                <span class="pull-right"> <a href="#"> Forgot Password?</a></span>
-            </label>
+
             <button class="btn btn-primary btn-lg btn-block" type="submit">Login</button>
             <a class="btn btn-warning btn-lg btn-block"  th:href="@{/register}">Signup</a>
         </div>
     </form>
-    <div class="text-right">
-        <div class="credits">
-
-            Designed by The Hackers</a>
-        </div>
-    </div>
 </div>
 
 
